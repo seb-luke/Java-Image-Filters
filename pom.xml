@@ -7,19 +7,15 @@
   <version>v0.1</version>
   <packaging>jar</packaging>
 
-  <name>JavaImageFilters</name>
-  <url>http://maven.apache.org</url>
+  <name>Java Image Filters</name>
+  <description>A small project showcasing how to browse an image using JavaFx and apply different filters on it</description>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<maven.compiler.target>1.8</maven.compiler.target>
+  	<maven.compiler.source>1.8</maven.compiler.source>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+ 
   </dependencies>
 </project>
