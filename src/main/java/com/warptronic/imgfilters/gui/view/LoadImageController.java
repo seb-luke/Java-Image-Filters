@@ -4,12 +4,14 @@ import java.io.File;
 import java.util.Arrays;
 
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class LoadImageController {
 	
 	Stage primaryStage;
+	Image image;
 
 	public LoadImageController() {
 		// empty constructor
@@ -32,7 +34,7 @@ public class LoadImageController {
 		File imgFile = fileChooser.showOpenDialog(primaryStage);
 		
 		if (imgFile != null) {
-			
+			image = new Image(imgFile.getAbsolutePath());
 		}
 
 	}
