@@ -1,13 +1,12 @@
 package com.warptronic.imgfilters;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import com.warptronic.imgfilters.gui.GuiBaseApplication;
+
+import javafx.application.Application;
+
+public class App {
+    public static void main( String[] args ) {
+    	
+    	Application.launch(GuiBaseApplication.class, args);
     }
 }
