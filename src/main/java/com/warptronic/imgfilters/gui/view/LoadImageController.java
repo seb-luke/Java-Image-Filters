@@ -5,13 +5,16 @@ import java.util.Arrays;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class LoadImageController {
 	
-	Stage primaryStage;
-	Image image;
+	private Stage primaryStage;
+	
+	@FXML
+	private ImageView imageView;
 
 	public LoadImageController() {
 		// empty constructor
@@ -26,17 +29,18 @@ public class LoadImageController {
 		FileChooser fileChooser = new FileChooser();
 		
 		fileChooser.getExtensionFilters().addAll(Arrays.asList(
-//				new FileChooser.ExtensionFilter("PNG Image", "*.png"),
-//				new FileChooser.ExtensionFilter("JPEG Image", "*.jpeg"),
-				new FileChooser.ExtensionFilter("JPG Image", "*.jpg")
+				new FileChooser.ExtensionFilter("All images", "*.bmp", "*.png", "*.jpg", "*.jpeg"),
+				new FileChooser.ExtensionFilter("BMP Image", "*.bmp"),
+				new FileChooser.ExtensionFilter("PNG Image", "*.png"),
+				new FileChooser.ExtensionFilter("JPEG Image", "*.jpeg", ".jpg")
 				));
 		
 		File imgFile = fileChooser.showOpenDialog(primaryStage);
-		
-		if (imgFile != null) {
-			image = new Image(imgFile.getAbsolutePath());
-		}
 
+		if (imgFile != null) {
+			Image image = new Image("file:" + imgFile.getAbsolutePath(), true);
+			this.imageView.setImage(image);
+		}
 	}
 
 }
