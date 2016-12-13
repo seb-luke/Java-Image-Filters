@@ -11,6 +11,7 @@
       <ButtonBar layoutX="187.0" layoutY="446.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <buttons>
           <Button mnemonicParsing="false" onAction="#handleBrowseImage" text="Browse..." />
+            <Button fx:id="okButton" mnemonicParsing="false" onAction="#okPushed" text="OK" />
         </buttons>
       </ButtonBar>
    </children>

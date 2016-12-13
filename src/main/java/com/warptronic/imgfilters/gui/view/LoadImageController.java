@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -14,14 +15,25 @@ public class LoadImageController {
 	private Stage primaryStage;
 	
 	@FXML
+	private Button okButton;
+	
+	@FXML
 	private ImageView imageView;
 
 	public LoadImageController() {
 		// empty constructor
 	}
 	
+	@FXML
+	private void initialize() {
+		okButton.setDisable(true);
+		this.imageView.setPreserveRatio(true);
+	}
+	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+		
+//		imageView.fitWidthProperty().bind(primaryStage.widthProperty());
 	}
 	
 	@FXML
@@ -40,7 +52,14 @@ public class LoadImageController {
 		if (imgFile != null) {
 			Image image = new Image("file:" + imgFile.getAbsolutePath(), true);
 			this.imageView.setImage(image);
+			
+			okButton.setDisable(false);
 		}
+	}
+	
+	@FXML
+	private void okPushed() {
+		//change BorderPane center to a new Layout
 	}
 
 }
