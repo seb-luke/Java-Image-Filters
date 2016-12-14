@@ -1,12 +1,18 @@
 package com.warptronic.imgfilters.gui.view;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
+import com.warptronic.imgfilters.gui.GuiBaseApplication;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -59,7 +65,18 @@ public class LoadImageController {
 	
 	@FXML
 	private void okPushed() {
-		//change BorderPane center to a new Layout
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(GuiBaseApplication.class.getResource("view/ApplyFilters.fxml"));
+		
+		try {
+			AnchorPane applyFiltersView = (AnchorPane) loader.load();
+			BorderPane rootLayout = (BorderPane) primaryStage.getScene().getRoot();
+			rootLayout.setCenter(applyFiltersView);
+			
+			ApplyFiltersController controller = loader.getController();
+			controller.setInitialData(applyFiltersView, primaryStage, imageView.getImage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-
 }
