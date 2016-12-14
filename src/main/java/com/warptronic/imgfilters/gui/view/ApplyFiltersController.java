@@ -4,7 +4,12 @@ import java.util.Arrays;
 
 import com.warptronic.imgfilters.filter.ImageFilter;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableArrayBase;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,11 +54,19 @@ public class ApplyFiltersController {
 		ImageFilter filter = new ImageFilter(mainImage.getImage());
 		
 		VBox vbox = new VBox();
-		vbox.getChildren().addAll(Arrays.asList(
-				new ImageView(filter.getGrayScaleImage()), 
-				new ImageView(filter.getGrayScaleImage()), 
-				new ImageView(filter.getGrayScaleImage())));
+		vbox.setSpacing(10);
 		
+		ObservableList<Node> images = FXCollections.observableArrayList();
+		for (int i = 0; i < 6; i++) {
+			ImageView img = new ImageView(filter.getGrayScaleImage());
+			img.fitWidthProperty().bind(imgListScrollPane.widthProperty());
+			img.setPreserveRatio(true);
+			img.setSmooth(false);
+			
+			images.add(img);
+		}
+		
+		vbox.getChildren().addAll(images);
 		imgListScrollPane.setContent(vbox);
 	}
 
