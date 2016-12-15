@@ -51,7 +51,7 @@ public class ApplyFiltersController {
 
 	private void setScrollPaneContents() {
 		
-		ImageFilter filter = new ImageFilter(mainImage.getImage());
+		ImageFilter filter = new ImageFilter(mainImage.getImage(), true);
 		
 		VBox vbox = new VBox();
 		vbox.setSpacing(10);

@@ -10,18 +10,32 @@ import javafx.embed.swing.SwingFXUtils;
 
 public class ImageFilter {
 	
+	private static final int THUMBNAIL_WIDTH = 600;
+//	private static final int THUMBNAIL_HEIGHT = 500;
 	private final BufferedImage originalImage;
 
 	public ImageFilter(Image image) {
-	    if (image instanceof BufferedImage) {
-	        this.originalImage = (BufferedImage) image;
+	    this(image, false);
+	}
+	
+	public ImageFilter(Image image, boolean convertToThumbnail) {
+	    if (convertToThumbnail) {
+	    	this.originalImage = toBufferedImage(image, THUMBNAIL_WIDTH);
 	    } else {
-	    	this.originalImage = toBufferedImage(image);
+	    	if (image instanceof BufferedImage) {
+		        this.originalImage = (BufferedImage) image;
+		    } else {
+		    	this.originalImage = toBufferedImage(image, image.getWidth(null));
+		    }
 	    }
 	}
 	
 	public ImageFilter(javafx.scene.image.Image image) {
 		this(SwingFXUtils.fromFXImage(image, null));
+	}
+	
+	public ImageFilter(javafx.scene.image.Image image, boolean convertToThumbnail) {
+		this(SwingFXUtils.fromFXImage(image, null), convertToThumbnail);
 	}
 	
     public BufferedImage getGrayScale() {
@@ -36,12 +50,13 @@ public class ImageFilter {
     	return SwingFXUtils.toFXImage(getGrayScale(), null);
     }
 	
-	private static BufferedImage toBufferedImage(Image imgage) {
-
-	    BufferedImage bimage = new BufferedImage(imgage.getWidth(null), imgage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage toBufferedImage(Image image, int width) {
+		int height = image.getHeight(null) * width / image.getWidth(null);
+				
+	    BufferedImage bimage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
 	    Graphics2D bGr = bimage.createGraphics();
-	    bGr.drawImage(imgage, 0, 0, null);
+	    bGr.drawImage(image, 0, 0, width, height, null);
 	    bGr.dispose();
 
 	    return bimage;
