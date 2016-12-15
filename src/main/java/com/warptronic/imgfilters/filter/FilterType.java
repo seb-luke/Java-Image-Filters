@@ -5,6 +5,7 @@ public enum FilterType {
 	ORIGINAL("Original Image"),
 	GRAYSCALE("Grayscale"),
 	SEPIA("Sepia"),
+	OLD("Oldies"),
 	BLUR("Blured-out Image"),
 	SHARPEN("Sharpened Image");
 	

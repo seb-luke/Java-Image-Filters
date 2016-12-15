@@ -127,10 +127,16 @@ public class ImageFilter {
     
     /**** BLURED IMAGE ****/
     
+    /**
+     * Gaussian blur: 
+     * {@link https://en.wikipedia.org/wiki/Kernel_(image_processing)}
+     * @return
+     */
     private BufferedImage getBlured() {
     	
-        float[] blurMatrix = { 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f,
-        						1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f };
+        float[] blurMatrix = { 	1.0f / 16.0f, 2.0f / 16.0f, 1.0f / 16.0f, 
+        						2.0f / 16.0f, 4.0f / 16.0f, 2.0f / 16.0f, 
+        						1.0f / 16.0f, 2.0f / 16.0f, 1.0f / 16.0f };
         BufferedImageOp blurFilter = new ConvolveOp(new Kernel(3, 3, blurMatrix), ConvolveOp.EDGE_NO_OP, null);
         
         return blurFilter.filter(originalImage, null);
@@ -144,6 +150,11 @@ public class ImageFilter {
     
     /**** SHARPENED IMAGE ****/
     
+    /**
+     * Sharpen
+     * {@link https://en.wikipedia.org/wiki/Kernel_(image_processing)}
+     * @return
+     */
     private BufferedImage getSharpened() {
     	
         float[] sharpenMatrix = { 0.0f, -1.0f, 0.0f, -1.0f, 5.0f, -1.0f, 0.0f, -1.0f, 0.0f };
@@ -170,6 +181,9 @@ public class ImageFilter {
 				break;
 			case SEPIA:
 				image = this.getSepiaImage(30);
+				break;
+			case OLD:
+				image = this.getSepiaImage(0);
 				break;
 			case SHARPEN:
 				image = this.getSharpenedImage();
