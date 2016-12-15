@@ -2,8 +2,8 @@ package com.warptronic.imgfilters.gui.view;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
+import com.warptronic.imgfilters.core.ImageExtensions;
 import com.warptronic.imgfilters.gui.GuiBaseApplication;
 
 import javafx.fxml.FXML;
@@ -45,13 +45,7 @@ public class LoadImageController {
 	@FXML
 	private void handleBrowseImage() {
 		FileChooser fileChooser = new FileChooser();
-		
-		fileChooser.getExtensionFilters().addAll(Arrays.asList(
-				new FileChooser.ExtensionFilter("All images", "*.bmp", "*.png", "*.jpg", "*.jpeg"),
-				new FileChooser.ExtensionFilter("BMP Image", "*.bmp"),
-				new FileChooser.ExtensionFilter("PNG Image", "*.png"),
-				new FileChooser.ExtensionFilter("JPEG Image", "*.jpeg", ".jpg")
-				));
+		fileChooser.getExtensionFilters().addAll(ImageExtensions.getOpenImageExtensioFilters());
 		
 		File imgFile = fileChooser.showOpenDialog(primaryStage);
 

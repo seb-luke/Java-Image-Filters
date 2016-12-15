@@ -1,21 +1,27 @@
 package com.warptronic.imgfilters.gui.view;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
+import com.warptronic.imgfilters.filter.FilterType;
 import com.warptronic.imgfilters.filter.ImageFilter;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableArrayBase;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ApplyFiltersController {
@@ -28,6 +34,10 @@ public class ApplyFiltersController {
 	
 	@FXML
 	private ImageView mainImage;
+	private Image originalImage;
+	
+	@FXML
+	private Button exportButton;
 	
 	public ApplyFiltersController() {
 		// empty constructor
@@ -35,6 +45,7 @@ public class ApplyFiltersController {
 	
 	public void setInitialData(AnchorPane applyFiltersView, Stage primaryStage, Image image) {
 		this.mainImage.setImage(image);
+		this.originalImage = image;
 		
 		this.applyFiltersView = applyFiltersView;
 		this.primaryStage = primaryStage;
@@ -57,17 +68,54 @@ public class ApplyFiltersController {
 		vbox.setSpacing(10);
 		
 		ObservableList<Node> images = FXCollections.observableArrayList();
-		for (int i = 0; i < 6; i++) {
-			ImageView img = new ImageView(filter.getGrayScaleImage());
-			img.fitWidthProperty().bind(imgListScrollPane.widthProperty());
-			img.setPreserveRatio(true);
-			img.setSmooth(false);
+		
+		for (FilterType filterType : FilterType.values()) {
+			ImageView imageView = getFilteredView(filterType, filter);
+			imageView.setOnMouseClicked(event -> handleFilterClicked(event, filterType));
 			
-			images.add(img);
+			images.add(imageView);
 		}
 		
 		vbox.getChildren().addAll(images);
 		imgListScrollPane.setContent(vbox);
+	}
+	
+	private ImageView getFilteredView(FilterType filterType, ImageFilter filter) {
+		
+		ImageView imageView = new ImageView(filter.getFilteredImage(filterType));
+		imageView.fitWidthProperty().bind(imgListScrollPane.widthProperty());
+		imageView.setPreserveRatio(true);
+		imageView.setSmooth(false);
+		imageView.setUserData(filterType);
+		
+		return imageView;
+	}
+	
+	private void handleFilterClicked(MouseEvent event, FilterType filterType) {
+		
+		ImageFilter filter = new ImageFilter(this.originalImage);
+		this.mainImage.setImage(filter.getFilteredImage(filterType));
+	}
+	
+	@FXML
+	private void handleBackClicked() {
+		
+	}
+	
+	@FXML
+	private void handleExportClicked() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Image");
+        
+        File file = fileChooser.showSaveDialog(this.primaryStage);
+        
+        if (file != null) {
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(this.mainImage.getImage(), null), "png", file);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
 	}
 
 }

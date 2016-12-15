@@ -28,8 +28,8 @@
             </SplitPane>
             <ButtonBar prefHeight="40.0" prefWidth="200.0">
               <buttons>
-                <Button mnemonicParsing="false" text="Back" />
-                  <Button mnemonicParsing="false" text="Export..." />
+                <Button mnemonicParsing="false" onAction="#handleBackClicked" text="Back" />
+                  <Button fx:id="exportButton" mnemonicParsing="false" onAction="#handleExportClicked" text="Export..." />
               </buttons>
                <padding>
                   <Insets right="10.0" />
