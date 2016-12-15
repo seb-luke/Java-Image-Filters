@@ -8,6 +8,7 @@ import com.warptronic.imgfilters.gui.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -26,6 +27,7 @@ public class GuiBaseApplication extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Java Image Filters");
+		this.primaryStage.getIcons().add(new Image("file:resources/img/logo.png"));
 		
 		initRootLayout();
 		initializeLoadImageView();
@@ -43,6 +45,7 @@ public class GuiBaseApplication extends Application {
 		
 		rootController = loader.getController();
 		rootController.setGuiBaseApp(this);
+		rootController.setStage(primaryStage);
 		
 		Scene scene = new Scene(rootLayout);
 		primaryStage.setScene(scene);
@@ -62,5 +65,6 @@ public class GuiBaseApplication extends Application {
 		
 		LoadImageController controller = loader.getController();
 		controller.setControllerData(this.primaryStage, this.rootController);
+		controller.setDefaultImage(new Image("file:resources/img/logo.png"), true);
 	}
 }

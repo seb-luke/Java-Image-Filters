@@ -24,7 +24,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -146,7 +145,7 @@ public class ApplyFiltersController {
 		
 		LoadImageController controller = loader.getController();
 		controller.setControllerData(this.primaryStage, this.rootController);
-		controller.setDefaultImage(originalImage);
+		controller.setDefaultImage(originalImage, false);
 	}
 	
 	@FXML

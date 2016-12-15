@@ -9,16 +9,22 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 
 public class RootLayoutController {
 	
 	private GuiBaseApplication guiBaseApp;
+	private Stage primaryStage;
 	
 	@FXML
 	private MenuItem removeButton;
 
 	public RootLayoutController() {
 		// empty constructor
+	}
+	
+	public void setStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
 	}
 	
 	@FXML
@@ -37,7 +43,8 @@ public class RootLayoutController {
 		alert.setHeaderText(null);
 		alert.setTitle("Remove Image Prompt");
 		alert.setContentText("Are you sure you want to remove the image? All changes will be lost!");
-
+		alert.initOwner(primaryStage);
+		
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.isPresent() && result.get() == ButtonType.OK){
 			guiBaseApp.initializeLoadImageView();
@@ -47,7 +54,8 @@ public class RootLayoutController {
 			alert.setTitle("Java Image Filters");
 			alert.setHeaderText(null);
 			alert.setContentText("Nothing changed!");
-
+			alert.initOwner(primaryStage);
+			
 			alert.showAndWait();
 		}
 	}
@@ -60,7 +68,7 @@ public class RootLayoutController {
 		alert.setContentText("This software was written, built and distributed "
 				+ "as a part of the GPS project for the Software Engineering Master Program "
 				+ "\n\n\t\t\t\tby Sebastian Luke");
-		
+		alert.initOwner(primaryStage);
 
 		alert.showAndWait();
 	}

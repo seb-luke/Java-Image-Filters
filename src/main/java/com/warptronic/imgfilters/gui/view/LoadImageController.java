@@ -42,9 +42,9 @@ public class LoadImageController {
 		this.rootController = rootController;
 	}
 	
-	public void setDefaultImage(Image defaultImage) {
+	public void setDefaultImage(Image defaultImage, boolean setDisable) {
 		this.imageView.setImage(defaultImage);
-		this.okButton.setDisable(false);
+		this.okButton.setDisable(setDisable);
 	}
 	
 	@FXML
