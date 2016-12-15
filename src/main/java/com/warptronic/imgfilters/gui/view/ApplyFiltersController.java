@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.warptronic.imgfilters.core.ImageExtensions;
 import com.warptronic.imgfilters.filter.FilterType;
 import com.warptronic.imgfilters.filter.ImageFilter;
 
@@ -106,6 +107,7 @@ public class ApplyFiltersController {
 	private void handleExportClicked() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Image");
+        fileChooser.getExtensionFilters().addAll(ImageExtensions.getSaveImageExtensionFilters());
         
         File file = fileChooser.showSaveDialog(this.primaryStage);
         

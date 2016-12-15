@@ -12,9 +12,9 @@ public class ImageExtensions {
 	
 	private static final List<ExtensionFilter> imageExtensionFilters = 
 			Arrays.asList(
+					new FileChooser.ExtensionFilter("JPEG Image", "*.jpg", "*.jpeg"),
 				new FileChooser.ExtensionFilter("BMP Image", "*.bmp"),
-				new FileChooser.ExtensionFilter("PNG Image", "*.png"),
-				new FileChooser.ExtensionFilter("JPEG Image", "*.jpeg", ".jpg")
+				new FileChooser.ExtensionFilter("PNG Image", "*.png")
 			);
 
 	private ImageExtensions() {
