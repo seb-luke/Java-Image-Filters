@@ -17,14 +17,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -63,19 +68,36 @@ public class ApplyFiltersController {
 		VBox vbox = new VBox();
 		vbox.setSpacing(10);
 		
-		ObservableList<Node> images = FXCollections.observableArrayList();
+		ObservableList<Node> labels = FXCollections.observableArrayList();
 		
 		for (FilterType filterType : FilterType.values()) {
 			ImageView imageView = getFilteredView(filterType, filter);
-			imageView.setOnMouseClicked(event -> handleFilterClicked(event, filterType));
+			
 			
 			Label label = new Label(filterType.getName());
+			label.setGraphic(imageView);
+			label.setTextFill(Color.MEDIUMSEAGREEN);
+			label.setFont(new Font("Lucida Sans", 16));
+			label.setGraphicTextGap(5);
+			label.setTextAlignment(TextAlignment.CENTER);
+			label.setContentDisplay(ContentDisplay.TOP);
 			
-			images.add(imageView);
-			images.add(label);
+			if (FilterType.ORIGINAL.equals(filterType)) {
+				// disable original image
+				disableLabel(label);
+			}
+			
+			label.setOnMouseClicked(event -> {
+				handleFilterClicked(event, filterType); 
+				disableLabel(label);
+			});
+			label.setOnMouseEntered(e -> label.setStyle("-fx-border-color: #3CB371;"));
+			label.setOnMouseExited(e -> label.setStyle("-fx-border: none;"));
+			
+			labels.add(label);
 		}
 		
-		vbox.getChildren().addAll(images);
+		vbox.getChildren().addAll(labels);
 		imgListScrollPane.setContent(vbox);
 	}
 	
@@ -90,7 +112,20 @@ public class ApplyFiltersController {
 		return imageView;
 	}
 	
+	private void disableLabel(Label label) {
+		label.setStyle("-fx-border-color: #3CB371;");
+		label.setDisable(true);
+	}
+	
 	private void handleFilterClicked(MouseEvent event, FilterType filterType) {
+		
+		//disable selected filter border
+		VBox vbox = (VBox) imgListScrollPane.getContent();
+		ObservableList<Node> labels = vbox.getChildren();
+		for (Node label : labels) {
+			label.setStyle("-fx-border: none;");
+			label.setDisable(false);
+		}
 		
 		ImageFilter filter = new ImageFilter(this.originalImage);
 		this.mainImage.setImage(filter.getFilteredImage(filterType));
@@ -132,7 +167,3 @@ public class ApplyFiltersController {
 	}
 
 }
-
-
-
-
