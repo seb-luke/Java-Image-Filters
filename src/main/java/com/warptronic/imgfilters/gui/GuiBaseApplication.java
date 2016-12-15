@@ -3,6 +3,7 @@ package com.warptronic.imgfilters.gui;
 import java.io.IOException;
 
 import com.warptronic.imgfilters.gui.view.LoadImageController;
+import com.warptronic.imgfilters.gui.view.RootLayoutController;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ public class GuiBaseApplication extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+	private RootLayoutController rootController;
 
 	public GuiBaseApplication() {
 		// empty for now
@@ -26,7 +28,7 @@ public class GuiBaseApplication extends Application {
 		this.primaryStage.setTitle("Java Image Filters");
 		
 		initRootLayout();
-		showGetImageOverview();
+		initializeLoadImageView();
 	}
 	
 	private void initRootLayout() {
@@ -39,12 +41,15 @@ public class GuiBaseApplication extends Application {
 			e.printStackTrace();
 		}
 		
+		rootController = loader.getController();
+		rootController.setGuiBaseApp(this);
+		
 		Scene scene = new Scene(rootLayout);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 	
-	private void showGetImageOverview() {
+	public void initializeLoadImageView() {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(GuiBaseApplication.class.getResource("view/LoadImage.fxml"));
 		
@@ -56,15 +61,6 @@ public class GuiBaseApplication extends Application {
 		}
 		
 		LoadImageController controller = loader.getController();
-		controller.setPrimaryStage(this.primaryStage);
+		controller.setControllerData(this.primaryStage, this.rootController);
 	}
-
 }
-
-
-
-
-
-
-
-

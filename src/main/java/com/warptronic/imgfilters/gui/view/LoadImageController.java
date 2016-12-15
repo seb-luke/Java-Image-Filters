@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 public class LoadImageController {
 	
 	private Stage primaryStage;
+	private RootLayoutController rootController;
 	
 	@FXML
 	private Button okButton;
@@ -36,12 +37,14 @@ public class LoadImageController {
 		this.imageView.setPreserveRatio(true);
 	}
 	
-	public void setPrimaryStage(Stage primaryStage) {
+	public void setControllerData(Stage primaryStage, RootLayoutController rootController) {
 		this.primaryStage = primaryStage;
+		this.rootController = rootController;
 	}
 	
 	public void setDefaultImage(Image defaultImage) {
 		this.imageView.setImage(defaultImage);
+		this.okButton.setDisable(false);
 	}
 	
 	@FXML
@@ -56,6 +59,7 @@ public class LoadImageController {
 			this.imageView.setImage(image);
 			
 			okButton.setDisable(false);
+			rootController.enableRemoveImage();
 		}
 	}
 	
@@ -70,7 +74,7 @@ public class LoadImageController {
 			rootLayout.setCenter(applyFiltersView);
 			
 			ApplyFiltersController controller = loader.getController();
-			controller.setInitialData(applyFiltersView, primaryStage, imageView.getImage());
+			controller.setInitialData(primaryStage, imageView.getImage(), this.rootController);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

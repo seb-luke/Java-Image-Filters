@@ -6,7 +6,7 @@ public enum FilterType {
 	GRAYSCALE("Grayscale"),
 	SEPIA("Sepia"),
 	OLD("Oldies"),
-	BLUR("Blured-out Image"),
+	BLUR("Gaussian Blur"),
 	SHARPEN("Sharpened Image");
 	
 	private final String filterName;

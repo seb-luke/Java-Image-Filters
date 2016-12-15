@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,8 +30,8 @@ import javafx.stage.Stage;
 
 public class ApplyFiltersController {
 	
-	private AnchorPane applyFiltersView;
 	private Stage primaryStage;
+	private RootLayoutController rootController;
 	
 	@FXML
 	ScrollPane imgListScrollPane;
@@ -46,19 +47,11 @@ public class ApplyFiltersController {
 		// empty constructor
 	}
 	
-	public void setInitialData(AnchorPane applyFiltersView, Stage primaryStage, Image image) {
+	public void setInitialData(Stage primaryStage, Image image, RootLayoutController rootController) {
 		this.mainImage.setImage(image);
 		this.originalImage = image;
-		
-		this.applyFiltersView = applyFiltersView;
 		this.primaryStage = primaryStage;
-		
-		BorderPane rootLayout = (BorderPane) this.primaryStage.getScene().getRoot();
-		rootLayout.prefHeightProperty().bind(this.applyFiltersView.prefHeightProperty());
-		rootLayout.prefWidthProperty().bind(this.applyFiltersView.prefWidthProperty());
-		
-		this.primaryStage.setWidth(this.applyFiltersView.getPrefWidth());
-		this.primaryStage.setHeight(this.applyFiltersView.getPrefHeight());
+		this.rootController = rootController;
 
 		setScrollPaneContents();
 	}
@@ -76,7 +69,10 @@ public class ApplyFiltersController {
 			ImageView imageView = getFilteredView(filterType, filter);
 			imageView.setOnMouseClicked(event -> handleFilterClicked(event, filterType));
 			
+			Label label = new Label(filterType.getName());
+			
 			images.add(imageView);
+			images.add(label);
 		}
 		
 		vbox.getChildren().addAll(images);
@@ -114,7 +110,7 @@ public class ApplyFiltersController {
 		}
 		
 		LoadImageController controller = loader.getController();
-		controller.setPrimaryStage(this.primaryStage);
+		controller.setControllerData(this.primaryStage, this.rootController);
 		controller.setDefaultImage(originalImage);
 	}
 	
