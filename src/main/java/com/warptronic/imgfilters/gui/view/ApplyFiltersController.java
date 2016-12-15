@@ -8,11 +8,13 @@ import javax.imageio.ImageIO;
 import com.warptronic.imgfilters.core.ImageExtensions;
 import com.warptronic.imgfilters.filter.FilterType;
 import com.warptronic.imgfilters.filter.ImageFilter;
+import com.warptronic.imgfilters.gui.GuiBaseApplication;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -100,7 +102,20 @@ public class ApplyFiltersController {
 	
 	@FXML
 	private void handleBackClicked() {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(GuiBaseApplication.class.getResource("view/LoadImage.fxml"));
 		
+		try {
+			AnchorPane loadImageOverview = (AnchorPane) loader.load();
+			BorderPane rootLayout = (BorderPane) primaryStage.getScene().getRoot();
+			rootLayout.setCenter(loadImageOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		LoadImageController controller = loader.getController();
+		controller.setPrimaryStage(this.primaryStage);
+		controller.setDefaultImage(originalImage);
 	}
 	
 	@FXML

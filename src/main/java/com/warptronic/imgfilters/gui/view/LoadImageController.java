@@ -38,8 +38,10 @@ public class LoadImageController {
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		
-//		imageView.fitWidthProperty().bind(primaryStage.widthProperty());
+	}
+	
+	public void setDefaultImage(Image defaultImage) {
+		this.imageView.setImage(defaultImage);
 	}
 	
 	@FXML
